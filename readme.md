@@ -3,46 +3,43 @@
 # endpoints:-
 
 GET/POST/PATCH/DELETE<br>
-|GET
-`/user`-------> |POST<br>
-                |-----> `/user/register`<br>  //for registering user
-
 ```
+
+|GET
+`/user`-------> |POST
+                |-----> `/user/register`  //for registering user
+
                    {
                         name:"Saurabh",
                         email:"sau4478@gmail.com",
                         password:"12234",
                         phone:37949740 (optional)
                     }
-```
 
                 |POST
-                |-----> `/user/login`<br>
+                |-----> `/user/login`
 
-```
                    {
                        
                         email:"sau4478@gmail.com",
                         password:"12234",
                        
                     }
-```
+
 
                 |GET
-                |---> `/user/admin`<br>
+                |---> `/user/admin` 
 
-```
                   headers:{
                     Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
                         
                     }
-```
 
-                |PATCH<br>
-                |------> `/user/superadmin/:id`<br>
+                |PATCH
+                |------> `/user/superadmin/:id`
 
 
-```
+
                   headers:{
                     Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
                         
