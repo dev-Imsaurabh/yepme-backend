@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
-async function adminValidator(req,res,next){
+async function superAdminValidator(req,res,next){
 
 
     let token = req.headers.authorization
@@ -13,7 +13,7 @@ async function adminValidator(req,res,next){
         })
 
         if(decoded){
-            if(decoded.role=="admin"){
+            if(decoded.role=="superadmin"){
                 
                 next()
             }else{
@@ -39,5 +39,5 @@ async function adminValidator(req,res,next){
 }
 
 module.exports={
-    adminValidator
+    superAdminValidator
 }

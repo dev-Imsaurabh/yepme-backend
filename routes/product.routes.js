@@ -1,6 +1,8 @@
 const express = require("express")
 const { adminValidator } = require("../middlewares/adminValidator")
 const { ProductModel } = require("../models/ProductModel")
+const jwt = require("jsonwebtoken")
+const { authenticator } = require("../middlewares/authenticator")
 
 const productRouter = express.Router()
 
@@ -32,7 +34,6 @@ productRouter.get("/",async(req,res)=>{
 productRouter.get("/:id",async(req,res)=>{
 
     let {id:_id} = req.params
-
     try {
         let data = await ProductModel.find({_id})
         res.send({
@@ -55,26 +56,44 @@ productRouter.get("/:id",async(req,res)=>{
 })
 
 
-productRouter.post("/",async(req,res)=>{
+//search route here
 
-    try {
-        let product = new ProductModel(req.body)
-      await  product.save()
-        res.send({
-            message:"Product added",
-            status:1,
-            error:false
-        })
+productRouter.use(authenticator)
 
-        
-    } catch (error) {
-        res.send({
-            message:"Something went wrong: "+error.message,
+productRouter.post("/", async(req,res)=>{
+    let token = req.headers.authorization
+    jwt.verify(token, process.env.SecretKey, async function(err, decoded) {
+
+        if(err) res.send({
+            message:"Something went wrong: "+err,
             status:0,
             error:true
         })
+
+        req.body.adminId="admin"+decoded.userId
+        try {
+            let product = new ProductModel(req.body)
+          await  product.save()
+            res.send({
+                message:"Product added",
+                status:1,
+                error:false
+            })
+    
+            
+        } catch (error) {
+            res.send({
+                message:"Something went wrong: "+error.message,
+                status:0,
+                error:true
+            })
+            
+        }
         
-    }
+     
+      });
+
+   
 
 })
 

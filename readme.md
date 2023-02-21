@@ -3,22 +3,65 @@
 # endpoints:-
 
 GET/POST/PATCH/DELETE<br>
+|GET
+`/user`-------> |POST<br>
+                |-----> `/user/register`<br>  //for registering user
 
-`/user`--->|POST<br>
-|---> `/user/register`<br>
-|---> `/user/login`<br>
+```
+                   {
+                        name:"Saurabh",
+                        email:"sau4478@gmail.com",
+                        password:"12234",
+                        phone:37949740 (optional)
+                    }
+```
+
+                |POST
+                |-----> `/user/login`<br>
+
+```
+                   {
+                       
+                        email:"sau4478@gmail.com",
+                        password:"12234",
+                       
+                    }
+```
+
+                |GET
+                |---> `/user/admin`<br>
+
+```
+                  headers:{
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                    }
+```
+
+                |PATCH<br>
+                |------> `/user/superadmin/:id`<br>
+
+
+```
+                  headers:{
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                    }
+```   
+
+ -----------------------------------------------------------------------------------------------------              
 
 |GET/POST<br>
-`/products`--->|GET/PATCH/DELETE<br>
-|---> `/products/:id`<br>
+`/products`---> |GET/PATCH/DELETE<br>
+                |-----------------> `/products/:id`<br>
 
 |GET/POST <br>  
-`/cart`--->|GET/PATCH/DELETE <br>
-|---> `/cart/:id`<br>
+`/cart`-------> |PATCH/DELETE <br>
+                |-------------> `/cart/:id`<br>
 
 |GET/POST<br>
-`/orders`--->|GET/PATCH/DELETE<br>
-|---> `/orders/:id`<br>
+`/orders`-----> |PATCH<br>
+                |------> `/orders/:id`<br>
 
 |GET<br>
 `/search`<br>
@@ -46,6 +89,7 @@ image<br>
 title<br>
 description<br>
 price<br>
+originalPrice<br>
 sizes<br>
 category<br>
 style<br>
@@ -57,74 +101,94 @@ sleeves<br>
 neck<br>
 brand<br>
 gender<br>
+delivery<br>
+adminId<br>
+tags<br>
 
-# user schema
+# user schema for Registering
 
 name:{type:String,required:true},<br>
 email:{type:String},<br>
 password:{type:String},<br>
-role:{type:String,required:true},<br>
+role:{type:String,required:true},<br> (Automatic)
 phone:title:{type:String},<br>
 
-# Product Schema<br>
+#
 
-image: { type: String, required: true },
-title: { type: String, required: true },
-description: { type: String, required: true },
-price: { type: Number, required: true },
-sizes: { type: String, required: true },
-category: { type: String },
-style: { type: String, required: true },
-color: { type: String, required: true },
-material: { type: String},
-fit: { type: String },
-occasion: { type: String},
-sleeves: { type: String },
-neck: { type: String, },
-brand: { type: String, required: true },
-gender: { type: String, required: true },
 
-# Cart Schema
+ # Product Schema
+_id:{type:String,required:true},<br>(Automatic)
+image: { type: String, required: true },<br>
+title: { type: String, required: true },<br>
+description: { type: String, required: true },<br>
+price: { type: Number, required: true },<br>
+originalPrice: { type: Number, required: true },<br>
+sizes: { type: String, required: true },<br>
+category: { type: String ,required:true },<br>
+style: { type: String, required: true },<br>
+color: { type: String, required: true },<br>
+material: { type: String},<br>
+fit: { type: String },<br>
+occasion: { type: String},<br>
+sleeves: { type: String },<br>
+neck: { type: String, },<br>
+brand: { type: String, required: true },<br>
+gender: { type: String, required: true },<br>
+delivery:{ type: Number, required: true },<br>
+adminId:{type: String, required: true},<br> (Automatic)
+tags:{type: String}<br>
 
-_id:{type:String,required:true},<br>
-image:{type:String,required:true},<br>
-title:{type:String,required:true},<br>
+
+ # Cart Schema
+_id:{type:String,required:true}, <br> (Automatic)
+image:{type:String,required:true}, <br>
+title:{type:String,required:true}, <br>
 description:{type:String,required:true},<br>
 price:{type:Number,required:true},<br>
+originalPrice: { type: Number, required: true },<br>
 sizes:{type:String,required:true},<br>
 category:{type:String,required:true},<br>
-style:{type:String,required:true},<br>
+style:{type:String},<br>
 color:{type:String,required:true},<br>
-material:{type:String,required:true},<br>
-fit:{type:String,required:true},<br>
-occasion:{type:String,required:true},<br>
-sleeves:{type:String,required:true},<br>
-neck:{type:String,required:true},<br>
+material: { type: String},<br>
+fit: { type: String },<br>
+occasion: { type: String},<br>
+sleeves: { type: String },<br>
+neck: { type: String, },<br>
 brand:{type:String,required:true},<br>
 gender:{type:String,required:true},<br>
-quantity:{type:Number,required:true},<br>
+delivery:{ type: Number, required: true },<br>
+adminId:{type: String, required: true},<br>
+quantity:{type:Number,required:true},<br> (Add manually)
 user:{type:String,required:true},<br>
 pid:{type:String,required:true},<br>
+tags:{type: String}<br>
 
-# Order Schema
 
+
+ # Order Schema
 image:{type:String,required:true},<br>
 title:{type:String,required:true},<br>
 description:{type:String,required:true},<br>
 price:{type:Number,required:true},<br>
+originalPrice: { type: Number, required: true },<br>
 sizes:{type:String,required:true},<br>
 category:{type:String,required:true},<br>
-style:{type:String,required:true},<br>
+style:{type:String},<br>
 color:{type:String,required:true},<br>
-material:{type:String,required:true},<br>
-fit:{type:String,required:true},<br>
-occasion:{type:String,required:true},<br>
-sleeves:{type:String,required:true},<br>
-neck:{type:String,required:true},<br>
+material: { type: String},<br>
+fit: { type: String },<br>
+occasion: { type: String},<br>
+sleeves: { type: String },<br>
+neck: { type: String, },<br>
 brand:{type:String,required:true},<br>
 gender:{type:String,required:true},<br>
 quantity:{type:Number,required:true},<br>
 user:{type:String,required:true},<br>
-status:{type:String,required:true},<br>
+status:{type:String,required:true},<br> (Automatic)
 address:{type:String,required:true},<br>
+orderDate:{type:String,required:true},<br> (Automatic)
 pid:{type:String,required:true},<br>
+delivery:{ type: Number, required: true },<br>
+adminId:{type: String, required: true},<br>
+tags:{type: String}<br>

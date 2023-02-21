@@ -5,8 +5,9 @@ const productSchema = mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
+  originalPrice: { type: Number, required: true },
   sizes: { type: String, required: true },
-  category: { type: String },
+  category: { type: String ,required:true },
   style: { type: String, required: true },
   color: { type: String, required: true },
   material: { type: String},
@@ -16,6 +17,9 @@ const productSchema = mongoose.Schema({
   neck: { type: String, },
   brand: { type: String, required: true },
   gender: { type: String, required: true },
+  delivery:{ type: Number, required: true },
+  adminId:{type: String, required: true},
+  tags:{type: String}
 },{
     versionKey:false
 });
