@@ -15,7 +15,7 @@ GET/POST/PATCH/DELETE<br>
                         password:"12234",
                         phone:37949740 (optional)
                     }
-
+-------------------------------------------------------------------------------------------------------
                 |POST
                 |-----> `/user/login`
 
@@ -26,6 +26,7 @@ GET/POST/PATCH/DELETE<br>
                        
                     }
 
+-------------------------------------------------------------------------------------------------------
 
                 |GET
                 |---> `/user/admin` 
@@ -34,6 +35,8 @@ GET/POST/PATCH/DELETE<br>
                     Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
                         
                     }
+
+-------------------------------------------------------------------------------------------------------
 
                 |PATCH
                 |------> `/user/superadmin/:id`
@@ -44,6 +47,7 @@ GET/POST/PATCH/DELETE<br>
                     Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
                         
                     }
+                    
 ```   
 
  -----------------------------------------------------------------------------------------------------              
