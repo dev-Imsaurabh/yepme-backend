@@ -11,6 +11,16 @@ require("dotenv").config()
 const app = express()
 app.use(cors())
 app.use(express.json())
+
+
+app.get("/",(req,res)=>{
+    res.send({
+        message:"Api is running",
+        status:0,
+        error:false
+    })
+})
+
 //user route
 app.use("/user",userRouter)
 app.use("/product",productRouter)
@@ -21,13 +31,6 @@ app.use("/order",orderRouter)
 
 
 
-app.get("/",(req,res)=>{
-    res.send({
-        message:"Api is running",
-        status:0,
-        error:false
-    })
-})
 
 app.listen(process.env.PORT,async()=>{
 
