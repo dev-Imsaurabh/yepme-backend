@@ -2,9 +2,9 @@
 
 # endpoints:-
 
-GET/POST/PATCH/DELETE<br>
-```
+ # /user
 
+```
 |GET
 `/user`-------> |POST
                 |-----> `/user/register`  //for registering user
@@ -32,6 +32,7 @@ GET/POST/PATCH/DELETE<br>
                 |---> `/user/admin` 
 
                   headers:{
+
                     Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
                         
                     }
@@ -44,24 +45,92 @@ GET/POST/PATCH/DELETE<br>
 
 
                   headers:{
+
                     Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
                         
                     }
-                    
+
 ```   
 
- -----------------------------------------------------------------------------------------------------              
+ -----------------------------------------------------------------------------------------------------
 
+ # /product             
+
+```
 |GET/POST<br>
-`/products`---> |GET/PATCH/DELETE<br>
-                |-----------------> `/products/:id`<br>
+`/product`---> |GET/PATCH/DELETE<br>
+                |-----------------> `/product/:id`<br>
+
+            |GET -----> /product?category=kurta
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+            }
+
+            |POST --> /product
+
+                {
+
+                    image: { type: String, required: true },<br>
+                    title: { type: String, required: true },<br>
+                    description: { type: String, required: true },<br>
+                    price: { type: Number, required: true },<br>
+                    originalPrice: { type: Number, required: true },<br>
+                    sizes: { type: String, required: true },<br>
+                    category: { type: String ,required:true },<br>
+                    style: { type: String, required: true },<br>
+                    color: { type: String, required: true },<br>
+                    material: { type: String},<br>
+                    fit: { type: String },<br>
+                    occasion: { type: String},<br>
+                    sleeves: { type: String },<br>
+                    neck: { type: String, },<br>
+                    brand: { type: String, required: true },<br>
+                    gender: { type: String, required: true },<br>
+                    delivery:{ type: Number, required: true },<br>
+                    tags:{type: String}<br>
+
+                }
+
+                 headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                    }
+
+-------------------------------------------------------------------------------------------------------
+
+            |PATCH -----> /product/:id
+                {
+                    key:"value"
+                }
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                }
+
+------------------------------------------------------------------------------------------------------
+
+            |DELETE -----> /product/:id
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                }
+
+```
 
 |GET/POST <br>  
 `/cart`-------> |PATCH/DELETE <br>
                 |-------------> `/cart/:id`<br>
 
 |GET/POST<br>
-`/orders`-----> |PATCH<br>
+`/order`-----> |PATCH<br>
                 |------> `/orders/:id`<br>
 
 |GET<br>
