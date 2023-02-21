@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 const { UserModel } = require("../models/UserModel");
 const { userValidator } = require("../middlewares/userValidator");
 const jwt = require("jsonwebtoken");
-const { superAdminValidator } = require("../middlewares/superadminValidator");
+const {superAdminValidator} = require("../middlewares/superAdminValidator.js")
 require("dotenv").config();
 
 userRouter.post("/login", async (req, res) => {
