@@ -57,9 +57,9 @@
  # /product             
 
 ```
-|GET/POST<br>
-`/product`---> |GET/PATCH/DELETE<br>
-                |-----------------> `/product/:id`<br>
+|GET/POST
+`/product`---> |GET/PATCH/DELETE
+                |-----------------> `/product/:id`
 
             |GET -----> /product?category=kurta
 
@@ -75,24 +75,24 @@
 
                 {
 
-                    image: { type: String, required: true },<br>
-                    title: { type: String, required: true },<br>
-                    description: { type: String, required: true },<br>
-                    price: { type: Number, required: true },<br>
-                    originalPrice: { type: Number, required: true },<br>
-                    sizes: { type: String, required: true },<br>
-                    category: { type: String ,required:true },<br>
-                    style: { type: String, required: true },<br>
-                    color: { type: String, required: true },<br>
-                    material: { type: String},<br>
-                    fit: { type: String },<br>
-                    occasion: { type: String},<br>
-                    sleeves: { type: String },<br>
-                    neck: { type: String, },<br>
-                    brand: { type: String, required: true },<br>
-                    gender: { type: String, required: true },<br>
-                    delivery:{ type: Number, required: true },<br>
-                    tags:{type: String}<br>
+                    image: { type: String, required: true },
+                    title: { type: String, required: true },
+                    description: { type: String, required: true },
+                    price: { type: Number, required: true },
+                    originalPrice: { type: Number, required: true },
+                    sizes: { type: String, required: true },
+                    category: { type: String ,required:true },
+                    style: { type: String, required: true },
+                    color: { type: String, required: true },
+                    material: { type: String},
+                    fit: { type: String },
+                    occasion: { type: String},
+                    sleeves: { type: String },
+                    neck: { type: String, },
+                    brand: { type: String, required: true },
+                    gender: { type: String, required: true },
+                    delivery:{ type: Number, required: true },
+                    tags:{type: String}
 
                 }
 
@@ -126,14 +126,153 @@
                 }
 
 ```
+ # /cart
 
-|GET/POST <br>  
-`/cart`-------> |PATCH/DELETE <br>
-                |-------------> `/cart/:id`<br>
+```
+|GET/POST 
+`/cart`-------> |PATCH/DELETE 
+                |-------------> `/cart/:id`
 
-|GET/POST<br>
-`/order`-----> |PATCH<br>
-                |------> `/orders/:id`<br>
+            |GET -----> /cart
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+            }
+
+-------------------------------------------------------------------------------------------------------            
+
+            |POST --> /cart
+
+                {
+
+                        image:{type:String,required:true},
+                        title:{type:String,required:true}, 
+                        description:{type:String,required:true},
+                        price:{type:Number,required:true},
+                        originalPrice: { type: Number, required: true },
+                        sizes:{type:String,required:true},
+                        category:{type:String,required:true},
+                        style:{type:String},
+                        color:{type:String,required:true},
+                        material: { type: String},
+                        fit: { type: String },
+                        occasion: { type: String},
+                        sleeves: { type: String },
+                        neck: { type: String, },
+                        brand:{type:String,required:true},
+                        gender:{type:String,required:true},
+                        delivery:{ type: Number, required: true },
+                        adminId:{type: String, required: true},
+                        quantity:{type:Number,required:true},(Add manually)
+                        user:{type:String,required:true},
+                        pid:{type:String,required:true},
+                        tags:{type: String}
+
+                }
+
+                 headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                    }
+
+-------------------------------------------------------------------------------------------------------
+
+            |PATCH -----> /cart/:id
+                {
+                    key:"value"
+                }
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                }
+
+------------------------------------------------------------------------------------------------------
+
+            |DELETE -----> /cart/:id
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                }
+
+
+
+```
+
+ # /order 
+```
+|GET/POST
+`/order`-----> |PATCH
+                |------> `/orders/:id`
+
+            |GET -----> /order
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+            }
+
+-------------------------------------------------------------------------------------------------------            
+
+            |POST --> /order
+
+                {
+
+                            image:{type:String,required:true},
+                            title:{type:String,required:true},
+                            description:{type:String,required:true},
+                            price:{type:Number,required:true},
+                            originalPrice: { type: Number, required: true },
+                            sizes:{type:String,required:true},
+                            category:{type:String,required:true},
+                            style:{type:String},<br>
+                            color:{type:String,required:true},
+                            material: { type: String},
+                            fit: { type: String },
+                            occasion: { type: String},
+                            sleeves: { type: String },
+                            neck: { type: String, },
+                            brand:{type:String,required:true},
+                            gender:{type:String,required:true},
+                            quantity:{type:Number,required:true},
+                            user:{type:String,required:true},
+                            status:{type:String,required:true},(Automatic)
+                            address:{type:String,required:true},
+                            orderDate:{type:String,required:true}, (Automatic)
+                            pid:{type:String,required:true},
+                            delivery:{ type: Number, required: true },
+                            adminId:{type: String, required: true},
+                            tags:{type: String}
+
+                }
+
+                 headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                    }
+
+-------------------------------------------------------------------------------------------------------
+
+            |PATCH -----> /order/:id
+                {
+                    key:"value"
+                }
+
+               headers:{
+
+                    Authorization:`kjxbjbjxsjbxsbdbxbsaodboaodsbdoubdba`
+                        
+                }
+            
+```
 
 |GET<br>
 `/search`<br>
@@ -143,9 +282,11 @@
 Authencator--> verify user
 
 # Querys:-
-
+```
 `/search?q=`<br>
 `/products?`<size, price, category, style, color, material, fir, occasion, sleeves, neck, brand, gender> =<br>
+
+```
 
 # user keys
 
@@ -185,7 +326,6 @@ password:{type:String},<br>
 role:{type:String,required:true},<br> (Automatic)
 phone:title:{type:String},<br>
 
-#
 
 
  # Product Schema
