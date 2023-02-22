@@ -13,7 +13,7 @@ async function adminValidator(req,res,next){
         })
 
         if(decoded){
-            if(decoded.role=="admin"){
+            if(decoded.role=="admin"||decoded.role=="superadmin"){
                 
                 next()
             }else{
