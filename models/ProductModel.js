@@ -19,6 +19,7 @@ const productSchema = mongoose.Schema({
   gender: { type: String, required: true },
   delivery:{ type: Number, required: true },
   adminId:{type: String, required: true},
+  stock:{type: Number, required: true},
   tags:{type: String}
 },{
     versionKey:false

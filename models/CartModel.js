@@ -23,6 +23,7 @@ const cartSchema = mongoose.Schema(
     quantity: { type: Number, required: true },
     user: { type: String, required: true },
     pid: { type: String, required: true },
+    stock:{type: Number, required: true},
     tags: { type: String },
   },
   {

@@ -72,8 +72,7 @@ productRouter.post("/", async(req,res)=>{
 
         req.body.adminId="admin"+decoded.userId
         try {
-            let product = new ProductModel(req.body)
-          await  product.save()
+           await ProductModel.insertMany(req.body)
             res.send({
                 message:"Product added",
                 status:1,

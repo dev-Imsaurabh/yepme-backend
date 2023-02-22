@@ -27,6 +27,8 @@ const orderSchema = mongoose.Schema({
     delivery:{ type: Number, required: true },
     adminId:{type: String, required: true},
     tags:{type: String},
+    stock:{type: Number, required: true},
+
     
 
 },{

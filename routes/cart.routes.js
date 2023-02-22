@@ -44,8 +44,7 @@ cartRouter.get("/",(req,res)=>{
 cartRouter.post("/",async(req,res)=>{
    
         try {
-            let cart = new CartModel(req.body)
-            await cart.save()
+            await CartModel.insertMany(req.body)
             res.send({
                 message:"Item added in cart",
                 status:1,
