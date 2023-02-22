@@ -43,8 +43,12 @@ orderRouter.get("/",(req,res)=>{
 orderRouter.post("/",async(req,res)=>{
    
     try {
-        req.body.status="ordered"
-        req.body.orderDate=String(Date.now())
+        
+        req.body.forEach(el => {
+            el.status="ordered"
+            el.orderDate=String(Date.now())
+        });
+        
         await OrderModel.insertMany(req.body)
         res.send({
             message:"Item added in order",

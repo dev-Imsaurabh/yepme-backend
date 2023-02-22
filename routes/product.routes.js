@@ -69,8 +69,11 @@ productRouter.post("/", async(req,res)=>{
             status:0,
             error:true
         })
+        
+        req.body.forEach(el => {
+            el.adminId="admin"+decoded.userId
 
-        req.body.adminId="admin"+decoded.userId
+        });
         try {
            await ProductModel.insertMany(req.body)
             res.send({

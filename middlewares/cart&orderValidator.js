@@ -13,7 +13,10 @@ async function cartNorderValidator(req,res,next){
         })
 
         if(decoded){
-            req.body.user = decoded.userId
+            req.body.forEach(el => {
+                el.user = decoded.userId
+
+            });
             next()
 
 
