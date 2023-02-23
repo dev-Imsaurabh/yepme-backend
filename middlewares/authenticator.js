@@ -13,7 +13,15 @@ async function authenticator(req,res,next){
         })
 
         if(decoded){
-            next()
+            if(decoded.userId=="deactivate"){
+                res.send({
+                    message:"Your Account is deactivated : Conatact SuperAdmin",
+                    status:0,
+                    error:true
+                })
+            }else{
+                next()
+            }
 
 
         }else{
