@@ -19,6 +19,7 @@ async function superAdminValidator(req,res,next){
                 try {
                     let data = await UserModel.find({email:id})
                     if(data.length>0){
+                        req.headers.userId = decoded.userId
                         next()
 
                     }else{

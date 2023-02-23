@@ -117,12 +117,13 @@ userRouter.post("/register", userValidator, async (req, res) => {
 
 userRouter.patch("/superadmin/:id", superAdminValidator, async (req, res) => {
   const { id } = req.params;
+  const {userId} = req.headers
   if(role=="delete"){
     try {
       await UserModel.deleteOne({email:id})
-      await ProductModel.deleteMany({adminId:"admin"+id})
-      await CartModel.deleteMany({adminId:"admin"+id})
-      await OrderModel.deleteMany({adminId:"admin"+id})
+      await ProductModel.deleteMany({adminId:"admin"+userId})
+      await CartModel.deleteMany({adminId:"admin"+userId})
+      await OrderModel.deleteMany({adminId:"admin"+userId})
       res.send({
         message:"User deleted",
         status:1,
