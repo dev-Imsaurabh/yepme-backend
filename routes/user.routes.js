@@ -183,8 +183,9 @@ userRouter.get("/getuser",authenticator,async(req,res)=>{
 
 
 userRouter.get("/admin", async (req, res) => {
+  let {role} = req.headers
   try {
-    let data = await UserModel.find({ role: "admin" });
+    let data = await UserModel.find({ role});
     res.send({
       message: "All users data",
       status: 1,
