@@ -4,6 +4,7 @@ const { ProductModel } = require("../models/ProductModel")
 const jwt = require("jsonwebtoken")
 const { authenticator } = require("../middlewares/authenticator")
 
+
 const productRouter = express.Router()
 
 

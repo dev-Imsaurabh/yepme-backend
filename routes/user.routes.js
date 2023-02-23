@@ -5,6 +5,9 @@ const bcrypt = require("bcrypt");
 const { UserModel } = require("../models/UserModel");
 const { userValidator } = require("../middlewares/userValidator");
 const jwt = require("jsonwebtoken");
+const {ProductModel}  = require("../models/ProductModel")
+const { CartModel } = require("../models/CartModel")
+const { OrderModel } = require("../models/OrderModel")
 const {authenticator} = require("../middlewares/authenticator")
 
 
@@ -114,20 +117,41 @@ userRouter.post("/register", userValidator, async (req, res) => {
 
 userRouter.patch("/superadmin/:id", superAdminValidator, async (req, res) => {
   const { id } = req.params;
-  try {
-    await UserModel.updateOne({ email: id }, req.body);
-    res.send({
-      message: "Role changed",
-      status: 1,
-      error: false,
-    });
-  } catch (error) {
-    res.send({
-      message: "Something went wrong: " + error.message,
-      status: 0,
-      error: true,
-    });
+  if(role=="delete"){
+    try {
+      await UserModel.deleteOne({email:id})
+      await ProductModel.deleteMany({adminId:"admin"+id})
+      await CartModel.deleteMany({adminId:"admin"+id})
+      await OrderModel.deleteMany({adminId:"admin"+id})
+      res.send({
+        message:"User deleted",
+        status:1,
+        error:false
+      })
+    } catch (error) {
+      res.send({
+        message:"User deletetion failed",
+        status:0,
+        error:true
+      })
+    }
+  }else{
+    try {
+      await UserModel.updateOne({ email: id }, req.body);
+      res.send({
+        message: "Role changed",
+        status: 1,
+        error: false,
+      });
+    } catch (error) {
+      res.send({
+        message: "Something went wrong: " + error.message,
+        status: 0,
+        error: true,
+      });
+    }
   }
+  
 });
 
 userRouter.get("/getuser",authenticator,async(req,res)=>{
@@ -184,6 +208,8 @@ userRouter.get("/getuser",authenticator,async(req,res)=>{
 
 userRouter.get("/admin", async (req, res) => {
   let {role} = req.headers
+
+
   try {
     let data = await UserModel.find({ role});
     res.send({
