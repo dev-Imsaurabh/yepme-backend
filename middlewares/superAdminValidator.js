@@ -1,4 +1,5 @@
-const jwt = require("jsonwebtoken")
+const jwt = require("jsonwebtoken");
+const { UserModel } = require("../models/UserModel");
 require("dotenv").config()
 async function superAdminValidator(req,res,next){
 
@@ -14,8 +15,31 @@ async function superAdminValidator(req,res,next){
 
         if(decoded){
             if(decoded.role=="superadmin"){
+                let {id} = req.params
+                console.log(id)
+                try {
+                    let data = await UserModel.find({email:id})
+                    if(data.length>0){
+                        next()
+
+                    }else{
+    
+                        res.send({
+                            message:"No user found with this email",
+                            status:0,
+                            error:true
+                        })
+                    }
+                } catch (error) {
+
+                    res.send({
+                        message:"Something went wrong: "+err,
+                        status:0,
+                        error:true
+                    })
+                    
+                }
                 
-                next()
             }else{
                 res.send({
                     message:"Operation not authorised,Please contact admin",
