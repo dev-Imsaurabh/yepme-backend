@@ -16,7 +16,6 @@ async function superAdminValidator(req,res,next){
         if(decoded){
             if(decoded.role=="superadmin"){
                 let {id} = req.params
-                console.log(id)
                 try {
                     let data = await UserModel.find({email:id})
                     if(data.length>0){
