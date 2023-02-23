@@ -143,7 +143,7 @@ userRouter.get("/getuser",authenticator,async(req,res)=>{
     if(decoded){
       let {userId,role}=decoded
       try {
-        if(role=="admin"||"superadmin"){
+        if(role=="admin"||role=="superadmin"){
           let data = await UserModel.find({_id:userId})
           res.send({
             message:"Admin panel approved",
