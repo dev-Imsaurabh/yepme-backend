@@ -115,7 +115,7 @@ userRouter.post("/register", userValidator, async (req, res) => {
 userRouter.patch("/superadmin/:id", superAdminValidator, async (req, res) => {
   const { id } = req.params;
   try {
-    await UserModel.findByIdAndUpdate({ email: id }, req.body);
+    await UserModel.updateOne({ email: id }, req.body);
     res.send({
       message: "Role changed",
       status: 1,
