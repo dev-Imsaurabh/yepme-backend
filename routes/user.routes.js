@@ -118,6 +118,7 @@ userRouter.post("/register", userValidator, async (req, res) => {
 userRouter.patch("/superadmin/:id", superAdminValidator, async (req, res) => {
   const { id } = req.params;
   const {userId} = req.headers
+  const {role} = req.body
   if(role=="delete"){
     try {
       await UserModel.deleteOne({email:id})
