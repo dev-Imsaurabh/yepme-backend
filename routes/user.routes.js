@@ -5,13 +5,15 @@ const bcrypt = require("bcrypt");
 const { UserModel } = require("../models/UserModel");
 const { userValidator } = require("../middlewares/userValidator");
 const jwt = require("jsonwebtoken");
+const {authenticator} = require("../middlewares/authenticator")
+
 
 const {superAdminValidator} = require("../middlewares/superAdminValidator.js")
 require("dotenv").config();
 
 
 
-userRouter.post("/login", async (req, res) => {
+userRouter.post("/login",async (req, res) => {
   let { email, password, phone } = req.body;
   if (email && password) {
     try {
@@ -127,6 +129,57 @@ userRouter.patch("/superadmin/:id", superAdminValidator, async (req, res) => {
     });
   }
 });
+
+userRouter.get("/getuser",authenticator,async(req,res)=>{
+  let token = req.headers.authorization
+  jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
+
+    if(err) res.send({
+      message:"Invalid token",
+      status:0,
+      error:true
+    })
+
+    if(decoded){
+      let {userId,role}=decoded
+      try {
+        if(role=="admin"||"superadmin"){
+          let data = await UserModel.find({_id:userId})
+          res.send({
+            message:"Admin panel approved",
+            role:role,
+            userId:userId,
+            name:data[0].name,
+            status:1,
+            error:false
+          })
+        }else{
+          res.send({
+            message:"Restricted Area",
+            status:0,
+            error:true
+          })
+        }        
+      } catch (error) {
+        res.send({
+          message:"Something went wrong: "+error.message,
+          status:0,
+          error:true
+        })
+        
+      }
+
+    }else{
+      res.send({
+        message:"Invalid token",
+        status:0,
+        error:true
+      })
+    }
+
+  })
+ 
+})
 
 
 userRouter.get("/admin", async (req, res) => {
