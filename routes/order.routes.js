@@ -17,7 +17,7 @@ orderRouter.get("/",(req,res)=>{
         })
         let {userId:user} = decoded
         try {
-            let count = await OrderModel.find({user}).count()
+            let count = await OrderModel.find({user}).countDocuments()
             let data = await OrderModel.find({user}).skip(page*5).limit(5)
             res.send({
                 message:"All order data",

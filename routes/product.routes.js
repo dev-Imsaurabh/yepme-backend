@@ -9,7 +9,7 @@ const productRouter = express.Router();
 productRouter.get("/", async (req, res) => {
     const page = req.query.page||0
   try {
-    let count = await ProductModel.find(req.query).count();
+    let count = await ProductModel.find(req.query).countDocuments();
     let data = await ProductModel.find(req.query).skip(page*10).limit(10);
     res.send({
       message: "All products data",
@@ -135,7 +135,7 @@ productRouter.post("/admin", async (req, res) => {
     if (decoded) {
      if(decoded.role=="admin"){
         try {
-            let count = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).count();
+            let count = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).countDocuments();
             let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).skip(page*5).limit(5);
             res.send({
               message: "All products data",
@@ -154,7 +154,7 @@ productRouter.post("/admin", async (req, res) => {
      }else{
         try {
             
-            let count = await ProductModel.find({...req.query }).count();
+            let count = await ProductModel.find({...req.query }).countDocuments();
             let data = await ProductModel.find({...req.query }).skip(page*5).limit(5);
             res.send({
               message: "All products data",

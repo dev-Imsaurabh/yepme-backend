@@ -12,10 +12,10 @@ statRouter.get("/order",async(req,res)=>{
     try {
         let count;
         if(request=="totalorder"){
-            count = await OrderModel.count(req.query)
+            count = await OrderModel.countDocuments(req.query)
 
         }else if(request=="pendingorder"){
-            count = await OrderModel.count({adminId:adminId, $or: [ { status: req.query.status1 }, { status: req.query.status2 } ] })
+            count = await OrderModel.countDocuments({adminId:adminId, $or: [ { status: req.query.status1 }, { status: req.query.status2 } ] })
         }else if(request=="totalearning"){
             count = await db.collection.aggregate([
                 // Match documents for a specific adminId
@@ -75,7 +75,7 @@ statRouter.get("/product",async(req,res)=>{
     try {
         let count;
         if(request=="totalproduct"){
-           count = await ProductModel.count(req.query)
+           count = await ProductModel.countDocuments(req.query)
 
         }
 

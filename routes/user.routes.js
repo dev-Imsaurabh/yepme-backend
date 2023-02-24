@@ -214,7 +214,7 @@ userRouter.get("/admin", async (req, res) => {
 
 
   try {
-    let count  = await UserModel.find({ role}).count()
+    let count  = await UserModel.find({ role}).countDocuments()
     let data = await UserModel.find({ role}).skip(page*5).limit(5);
     res.send({
       message: "All users data",
