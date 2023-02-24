@@ -15,11 +15,11 @@ statRouter.get("/order",async(req,res)=>{
             count = await OrderModel.find(req.query).count()
 
         }else if(request=="pendingorder"){
-            count = await OrderModel.find({adminId:adminId, $or: [ { status: req.query.status1 }, { status: req.query.status2 } ] })
+            count = await OrderModel.find({adminId:adminId, $or: [ { status: req.query.status1 }, { status: req.query.status2 } ] }).count()
         }else if(request==""){
 
         }else if(request==""){
-            
+
         }
       
 
