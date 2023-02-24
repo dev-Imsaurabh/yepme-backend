@@ -16,9 +16,34 @@ statRouter.get("/order",async(req,res)=>{
 
         }else if(request=="pendingorder"){
             count = await OrderModel.find({adminId:adminId, $or: [ { status: req.query.status1 }, { status: req.query.status2 } ] }).count()
-        }else if(request==""){
-
-        }else if(request==""){
+        }else if(request=="totalearning"){
+            count = await db.collection.aggregate([
+                // Match documents for a specific adminId
+                { $match: { adminId: adminId } },
+                // Calculate the total price for each document
+                {
+                  $addFields: {
+                    totalPrice: { $multiply: [ "$price", "$quantity" ] }
+                  }
+                },
+                // Apply the discount based on the value of the totalDiscountInPercent field
+                {
+                  $addFields: {
+                    discountAmount: { $multiply: [ "$totalPrice", { $divide: [ "$totalDiscountInPercent", 100 ] } ] },
+                    discountedPrice: { $subtract: [ "$totalPrice", { $multiply: [ "$totalPrice", { $divide: [ "$totalDiscountInPercent", 100 ] } ] } ] }
+                  }
+                },
+                // Group the documents by _id and calculate the total sum of each field
+                {
+                  $group: {
+                    _id: "$_id",
+                    totalPrice: { $sum: "$totalPrice" },
+                    discountAmount: { $sum: "$discountAmount" },
+                    discountedPrice: { $sum: "$discountedPrice" }
+                  }
+                }
+              ])
+              
 
         }
       
@@ -43,8 +68,15 @@ statRouter.get("/order",async(req,res)=>{
 })
 
 statRouter.get("/product",async(req,res)=>{
+    
+    let {request,adminId} = req.query
+
 
     try {
+
+        if(request=="totalproduct"){
+
+        }
 
         let count = await ProductModel.find(req.query).count()
         res.send({
@@ -63,6 +95,8 @@ statRouter.get("/product",async(req,res)=>{
     }
 
 })
+
+
 
 module.exports={
     statRouter
