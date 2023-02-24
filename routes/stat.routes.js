@@ -4,7 +4,7 @@ const { OrderModel } = require("../models/OrderModel")
 const { ProductModel } = require("../models/ProductModel")
 
 const statRouter = express.Router()
-app.use(adminValidator)
+statRouter.use(adminValidator)
 statRouter.get("/order",async(req,res)=>{
 
     try {
