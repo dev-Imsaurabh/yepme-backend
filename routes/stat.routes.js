@@ -65,6 +65,8 @@ statRouter.get("/product",async(req,res)=>{
         if(request=="totalproduct"){
            count = await ProductModel.countDocuments({adminId:adminId})
 
+        }else if(request=="outofstock"){
+            count = await ProductModel.countDocuments({adminId:adminId,stock:0})
         }
 
         res.send({
