@@ -73,12 +73,12 @@ statRouter.get("/product",async(req,res)=>{
 
 
     try {
-
+        let count;
         if(request=="totalproduct"){
+           count = await ProductModel.find(req.query).count()
 
         }
 
-        let count = await ProductModel.find(req.query).count()
         res.send({
             message:"All Product stats",
             status:1,
