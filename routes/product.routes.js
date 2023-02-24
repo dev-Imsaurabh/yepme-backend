@@ -117,7 +117,7 @@ productRouter.delete("/:id", async (req, res) => {
   }
 });
 
-productRouter.get("/admin", async (req, res) => {
+productRouter.post("/admin", async (req, res) => {
   const { token } = req.headers.authorization;
   
   jwt.verify(token, process.env.SecretKey, async (err, decoded) => {
