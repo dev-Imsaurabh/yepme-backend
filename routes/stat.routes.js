@@ -12,12 +12,12 @@ statRouter.get("/order",async(req,res)=>{
     try {
         let count;
         if(request=="totalorder"){
-            count = await OrderModel.countDocuments(req.query)
+            count = await OrderModel.countDocuments({adminId:adminId})
 
         }else if(request=="pendingorder"){
             count = await OrderModel.countDocuments({adminId:adminId, $or: [ { status: req.query.status1 }, { status: req.query.status2 } ] })
         }else if(request=="totalearning"){
-            count = await db.collection.aggregate([
+            count = await OrderModel.aggregate([
                 // Match documents for a specific adminId
                 { $match: { adminId: adminId } },
                 // Calculate the total price for each document
