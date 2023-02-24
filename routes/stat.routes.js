@@ -30,9 +30,9 @@ statRouter.get("/order",async(req,res)=>{
                }
             }
          ])
-         
-              
 
+          count = count.length > 0 ? count[0].total : 0;
+              
         }
       
 
