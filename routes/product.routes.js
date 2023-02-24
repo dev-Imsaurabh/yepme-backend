@@ -119,6 +119,7 @@ productRouter.delete("/:id", async (req, res) => {
 
 productRouter.post("/admin", async (req, res) => {
   const  token  = req.headers.authorization;
+  const {page} = req.query
   
   jwt.verify(token, process.env.SecretKey, async (err, decoded) => {
     if (err)
@@ -131,12 +132,14 @@ productRouter.post("/admin", async (req, res) => {
     if (decoded) {
      if(decoded.role=="admin"){
         try {
-            let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query });
+            let count = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).count();
+            let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).skip(page*5).limit(5);
             res.send({
               message: "All products data",
               status: 1,
               data: data,
               error: false,
+              count:count
             });
           } catch (error) {
             res.send({
@@ -147,11 +150,14 @@ productRouter.post("/admin", async (req, res) => {
           }
      }else{
         try {
-            let data = await ProductModel.find({...req.query });
+            
+            let count = await ProductModel.find({...req.query }).count();
+            let data = await ProductModel.find({...req.query }).skip(page*5).limit(5);
             res.send({
               message: "All products data",
               status: 1,
               data: data,
+              count:count,
               error: false,
             });
           } catch (error) {
