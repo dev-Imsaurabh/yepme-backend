@@ -20,7 +20,8 @@ statRouter.get("/order",async(req,res)=>{
            count = await OrderModel.aggregate([
             {
                $match: {
-                  adminId: { $eq: adminId }
+                  adminId: { $eq: adminId },
+                  status:{$eq:"delivered"}
                }
             },
             {
