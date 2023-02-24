@@ -119,6 +119,7 @@ productRouter.delete("/:id", async (req, res) => {
 
 productRouter.get("/admin", async (req, res) => {
   const { token } = req.headers.authorization;
+  
   jwt.verify(token, process.env.SecretKey, async (err, decoded) => {
     if (err)
       res.send({
@@ -129,7 +130,7 @@ productRouter.get("/admin", async (req, res) => {
 
     if (decoded) {
       try {
-        let data = await ProductModel.find({ _id: "admin" + decoded.userId });
+        let data = await ProductModel.find({ _id: "admin" + decoded.userId,...req.query });
         res.send({
           message: "All products data",
           status: 1,
