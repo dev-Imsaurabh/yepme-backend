@@ -129,21 +129,39 @@ productRouter.post("/admin", async (req, res) => {
       });
 
     if (decoded) {
-      try {
-        let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query });
-        res.send({
-          message: "All products data",
-          status: 1,
-          data: data,
-          error: false,
-        });
-      } catch (error) {
-        res.send({
-          message: "Something went wrong: " + error.message,
-          status: 0,
-          error: true,
-        });
-      }
+     if(decoded.role=="admin"){
+        try {
+            let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query });
+            res.send({
+              message: "All products data",
+              status: 1,
+              data: data,
+              error: false,
+            });
+          } catch (error) {
+            res.send({
+              message: "Something went wrong: " + error.message,
+              status: 0,
+              error: true,
+            });
+          }
+     }else{
+        try {
+            let data = await ProductModel.find({...req.query });
+            res.send({
+              message: "All products data",
+              status: 1,
+              data: data,
+              error: false,
+            });
+          } catch (error) {
+            res.send({
+              message: "Something went wrong: " + error.message,
+              status: 0,
+              error: true,
+            });
+          }
+     }
     }else{
 
         res.send({
