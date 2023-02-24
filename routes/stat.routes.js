@@ -75,7 +75,7 @@ statRouter.get("/product",async(req,res)=>{
     try {
         let count;
         if(request=="totalproduct"){
-           count = await ProductModel.countDocuments(req.query)
+           count = await ProductModel.countDocuments({adminId:adminId})
 
         }
 
