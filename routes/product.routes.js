@@ -130,7 +130,7 @@ productRouter.get("/admin", async (req, res) => {
 
     if (decoded) {
       try {
-        let data = await ProductModel.find({ _id: "admin" + decoded.userId,...req.query });
+        let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query });
         res.send({
           message: "All products data",
           status: 1,
