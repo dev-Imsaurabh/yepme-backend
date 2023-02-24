@@ -7,9 +7,20 @@ const statRouter = express.Router()
 statRouter.use(adminValidator)
 statRouter.get("/order",async(req,res)=>{
 
-    try {
+    let {request,adminId} = req.query
 
-        let count = await OrderModel.find(req.query).count()
+    try {
+        let count;
+        if(request=="totalorder"){
+            count = await OrderModel.find(req.query).count()
+
+        }else if(request=="pendingorder"){
+            count = await OrderModel.find({adminId:adminId, $or: [ { status: req.query.status1 }, { status: status2 } ] })
+        }
+      
+
+
+
         res.send({
             message:"All Order stats",
             status:1,
