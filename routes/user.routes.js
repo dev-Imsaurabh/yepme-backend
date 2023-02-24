@@ -210,7 +210,7 @@ userRouter.get("/getuser",authenticator,async(req,res)=>{
 
 userRouter.get("/admin", async (req, res) => {
   let {role} = req.headers
-  let {page} = req.query
+  let page = req.query.page||0
 
 
   try {

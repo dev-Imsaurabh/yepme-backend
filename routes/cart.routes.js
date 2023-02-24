@@ -7,6 +7,7 @@ const cartRouter = express.Router()
 
 cartRouter.get("/",(req,res)=>{
     let token = req.headers.authorization
+    let page = req.query.page||0
     jwt.verify(token, process.env.SecretKey, async function(err, decoded) {
         if(err) res.send({
             message:"Something went wrong: "+err,
@@ -15,10 +16,12 @@ cartRouter.get("/",(req,res)=>{
         })
         let {userId:user} = decoded
         try {
-            let data = await CartModel.find({user})
+            let count = await CartModel.find({user}).count()
+            let data = await CartModel.find({user}).skip(page*5).limit(5)
             res.send({
                 message:"All cart data",
                 status:1,
+                count:count,
                 data:data,
                 error:false
             })

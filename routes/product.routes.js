@@ -7,10 +7,13 @@ const { authenticator } = require("../middlewares/authenticator");
 const productRouter = express.Router();
 
 productRouter.get("/", async (req, res) => {
+    const page = req.query.page||0
   try {
-    let data = await ProductModel.find(req.query);
+    let count = await ProductModel.find(req.query).count();
+    let data = await ProductModel.find(req.query).skip(page*10).limit(10);
     res.send({
       message: "All products data",
+      count:count,
       status: 1,
       data: data,
       error: false,
@@ -119,7 +122,7 @@ productRouter.delete("/:id", async (req, res) => {
 
 productRouter.post("/admin", async (req, res) => {
   const  token  = req.headers.authorization;
-  const {page} = req.query
+  const page = req.query.page
   
   jwt.verify(token, process.env.SecretKey, async (err, decoded) => {
     if (err)
