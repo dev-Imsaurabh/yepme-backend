@@ -133,7 +133,7 @@ productRouter.post("/admin", async (req, res) => {
      if(decoded.role=="admin"){
         try {
             let count = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).count();
-            let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).skip(page*5).limit(5);
+            let data = await ProductModel.find({adminId: "admin" + decoded.userId,...req.query }).skip(page==1?0:page*5).limit(5);
             res.send({
               message: "All products data",
               status: 1,

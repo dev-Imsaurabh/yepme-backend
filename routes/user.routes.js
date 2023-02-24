@@ -210,10 +210,11 @@ userRouter.get("/getuser",authenticator,async(req,res)=>{
 
 userRouter.get("/admin", async (req, res) => {
   let {role} = req.headers
+  let {page} = req.query
 
 
   try {
-    let data = await UserModel.find({ role});
+    let data = await UserModel.find({ role}).skip(page==1?0:page*5).limit(5);
     res.send({
       message: "All users data",
       status: 1,
