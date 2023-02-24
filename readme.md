@@ -255,6 +255,7 @@
                             adminId:{type: String, required: true},
                             tags:{type: String},
                             stock:{type: Number, required: true},
+                            totalDiscountPrice:{type:Number,required:true}
 
 
                 }]
@@ -415,4 +416,6 @@ delivery:{ type: Number, required: true },<br>
 adminId:{type: String, required: true},<br>
 tags:{type: String},<br>
 stock:{type: Number, required: true}<br>
+totalDiscountPrice:{type:Number,required:true}
+
 

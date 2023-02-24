@@ -28,7 +28,7 @@ const orderSchema = mongoose.Schema({
     adminId:{type: String, required: true},
     tags:{type: String},
     stock:{type: Number, required: true},
-    totalDiscountInPercent:{type:Number,required:true}
+    totalDiscountPrice:{type:Number,required:true}
 
     
 
