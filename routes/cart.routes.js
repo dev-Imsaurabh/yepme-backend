@@ -2,6 +2,7 @@ const express = require("express")
 const jwt = require("jsonwebtoken")
 const { CartModel } = require("../models/CartModel")
 const cartRouter = express.Router()
+require("dotenv").config()
 
 
 
@@ -45,26 +46,53 @@ cartRouter.get("/",(req,res)=>{
 
 
 cartRouter.post("/",async(req,res)=>{
-   
-        try {
-            await CartModel.insertMany(req.body)
-            res.send({
-                message:"Item added in cart",
-                status:1,
-                error:false
-            })
-        } catch (error) {
-            
-            res.send({
-                message:"Something went wrong: "+error.message,
+
+    let token = req.headers.authorization
+
+    jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
+
+        if(err) res.send({
+            message:"Invalid token: "+err,
+            status:0,
+            error:true
+        })
+
+        if(decoded){
+            try {
+                req.body.user=decoded.userId
+                await CartModel.insertMany(req.body)
+                res.send({
+                    message:"Item added in cart",
+                    status:1,
+                    error:false
+                })
+            } catch (error) {
+                
+                res.send({
+                    message:"Something went wrong: "+error.message,
+                    status:0,
+                    error:true
+                })
+    
+            }
+
+        }else{
+
+         res.send({
+                message:"Invalid token: "+err,
                 status:0,
                 error:true
             })
+    
 
         }
+    })
+   
+       
      
       });
 
+      
       
 
 cartRouter.patch("/:id",async(req,res)=>{
