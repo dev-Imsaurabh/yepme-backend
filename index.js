@@ -27,7 +27,6 @@ app.use("/user",userRouter)
 app.use("/product",productRouter)
 app.use(authenticator)
 app.use("/stat",statRouter)
-app.use(cartNorderValidator)
 app.use("/cart",cartRouter)
 app.use("/order",orderRouter)
 

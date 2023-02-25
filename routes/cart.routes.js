@@ -1,5 +1,6 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
+const { cartNorderValidator } = require("../middlewares/cart&orderValidator")
 const { CartModel } = require("../models/CartModel")
 const cartRouter = express.Router()
 require("dotenv").config()
@@ -87,6 +88,8 @@ cartRouter.get("/:pid",(req,res)=>{
 
 })
 
+
+cartRouter.use(cartNorderValidator)
 
 
 

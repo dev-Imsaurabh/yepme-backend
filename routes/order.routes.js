@@ -42,6 +42,8 @@ orderRouter.get("/",(req,res)=>{
 
 })
 
+orderRouter.use(cartNorderValidator)
+
 
 orderRouter.post("/",async(req,res)=>{
    
