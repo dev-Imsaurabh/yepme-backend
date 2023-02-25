@@ -95,48 +95,23 @@ cartRouter.use(cartNorderValidator)
 
 cartRouter.post("/",async(req,res)=>{
 
-    let token = req.headers.authorization
-
-    jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
-
-        if(err) res.send({
-            message:"Invalid token: "+err,
+    try {
+       
+        await CartModel.insertMany(req.body)
+        res.send({
+            message:"Item added in cart",
+            status:1,
+            error:false
+        })
+    } catch (error) {
+        
+        res.send({
+            message:"Something went wrong: "+error.message,
             status:0,
             error:true
         })
 
-        if(decoded){
-            try {
-                req.body.forEach(el => {
-                    el.user=decoded.userId
-                });
-                await CartModel.insertMany(req.body)
-                res.send({
-                    message:"Item added in cart",
-                    status:1,
-                    error:false
-                })
-            } catch (error) {
-                
-                res.send({
-                    message:"Something went wrong: "+error.message,
-                    status:0,
-                    error:true
-                })
-    
-            }
-
-        }else{
-
-         res.send({
-                message:"Invalid token: "+err,
-                status:0,
-                error:true
-            })
-    
-
-        }
-    })
+    }
    
        
      
