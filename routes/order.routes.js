@@ -4,6 +4,7 @@ const { adminValidator } = require("../middlewares/adminValidator")
 const { cartNorderValidator } = require("../middlewares/cart&orderValidator")
 const { CartModel } = require("../models/CartModel")
 const { OrderModel } = require("../models/OrderModel")
+require("dotenv").config()
 
 const orderRouter = express.Router()
 
@@ -83,32 +84,57 @@ orderRouter.use(cartNorderValidator)
 
 
 orderRouter.post("/",async(req,res)=>{
-    let {userId} = req.headers 
-   
-    try {
-        
-        req.body.forEach(el => {
-            el.status="ordered"
-            el.orderDate=String(Date.now())
-        });
-        
-        await OrderModel.insertMany(req.body)
-        console.log(userId,"user id")
-        await CartModel.deleteMany({user:userId})
-        res.send({
-            message:"Item added in order",
-            status:1,
-            error:false
-        })
-    } catch (error) {
-        
-        res.send({
-            message:"Something went wrong: "+error.message,
+    let token = req.headers.authorization
+    jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
+        if(err) res.send({
+            message:"Inavlid token: "+err,
             status:0,
             error:true
         })
 
-    }
+        if(decoded){
+
+            await CartModel.deleteMany({user:decoded.userId})
+
+            try {
+        
+                req.body.forEach(el => {
+                    el.status="ordered"
+                    el.orderDate=String(Date.now())
+                    
+                });
+                
+                await OrderModel.insertMany(req.body)
+                
+                res.send({
+                    message:"Item added in order",
+                    status:1,
+                    error:false
+                })
+            } catch (error) {
+                
+                res.send({
+                    message:"Something went wrong: "+error.message,
+                    status:0,
+                    error:true
+                })
+        
+            }
+
+        }else{
+
+             
+            res.send({
+                message:"Invalid token: ",
+                status:0,
+                error:true
+            })
+
+        }
+
+    })
+   
+ 
  
   });
 
