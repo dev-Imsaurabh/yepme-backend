@@ -2,6 +2,7 @@ const express = require("express")
 const jwt = require("jsonwebtoken")
 const { adminValidator } = require("../middlewares/adminValidator")
 const { cartNorderValidator } = require("../middlewares/cart&orderValidator")
+const { CartModel } = require("../models/CartModel")
 const { OrderModel } = require("../models/OrderModel")
 
 const orderRouter = express.Router()
@@ -82,6 +83,7 @@ orderRouter.use(cartNorderValidator)
 
 
 orderRouter.post("/",async(req,res)=>{
+    let {userId} = req.headers 
    
     try {
         
@@ -91,6 +93,7 @@ orderRouter.post("/",async(req,res)=>{
         });
         
         await OrderModel.insertMany(req.body)
+        await CartModel.deleteMany({user:userId})
         res.send({
             message:"Item added in order",
             status:1,
