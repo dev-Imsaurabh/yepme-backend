@@ -1,6 +1,7 @@
 const express = require("express")
 const jwt = require("jsonwebtoken")
 const { adminValidator } = require("../middlewares/adminValidator")
+const { cartNorderValidator } = require("../middlewares/cart&orderValidator")
 const { OrderModel } = require("../models/OrderModel")
 
 const orderRouter = express.Router()
