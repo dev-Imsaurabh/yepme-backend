@@ -19,18 +19,18 @@ statRouter.get("/order",async(req,res)=>{
         }else if(request=="totalearning"){
            count = await OrderModel.aggregate([
             {
-               $match: {
-                  adminId: { $eq: adminId },
-                  status:{$eq:"delivered"}
-               }
+              $match: {
+                adminId: adminId
+              }
             },
             {
-               $group: {
-                  _id: null,
-                  total: { $sum: "$totalDiscountPrice" }
-               }
+              $group: {
+                _id: null,
+                total: { $sum: { $multiply: ["$price", "$quantity"] } }
+              }
             }
-         ])
+          ])
+          
 
           count = count.length > 0 ? count[0].total : 0;
               
