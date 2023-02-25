@@ -59,7 +59,9 @@ cartRouter.post("/",async(req,res)=>{
 
         if(decoded){
             try {
-                req.body.user=decoded.userId
+                req.body.forEach(el => {
+                    el.user=decoded.userId
+                });
                 await CartModel.insertMany(req.body)
                 res.send({
                     message:"Item added in cart",
