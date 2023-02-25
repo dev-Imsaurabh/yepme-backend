@@ -48,21 +48,14 @@ orderRouter.get("/",(req,res)=>{
 
 orderRouter.patch("/:id",async(req,res)=>{
     let {id:_id} = req.params
-    let token = req.headers.authorization
-    jwt.verify(token, process.env.SecretKey, async(err,decoded)=>{
-        if(err) res.send({
-            message:"Something went wrong: "+err,
-            status:0,
-            error:true
-        })
+    
         try {
-            let {userId:user}=decoded
-            await OrderModel.updateOne({_id,user},req.body)
+            await OrderModel.updateOne({_id},req.body)
             res.send({
-                message:"Item updated",
+                message:"Status updated",
                 status:1,
                 error:false
-            })
+            })           
     
         } catch (error) {
     
@@ -74,7 +67,6 @@ orderRouter.patch("/:id",async(req,res)=>{
             
         }
 
-    })
 
 
   });
