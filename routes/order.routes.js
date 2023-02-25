@@ -93,7 +93,7 @@ orderRouter.post("/",async(req,res)=>{
         });
         
         await OrderModel.insertMany(req.body)
-        console.log(userId)
+        console.log(userId,"user id")
         await CartModel.deleteMany({user:userId})
         res.send({
             message:"Item added in order",
