@@ -89,36 +89,6 @@ cartRouter.get("/:pid",(req,res)=>{
 })
 
 
-cartRouter.use(cartNorderValidator)
-
-
-
-cartRouter.post("/",async(req,res)=>{
-
-    try {
-       
-        await CartModel.insertMany(req.body)
-        res.send({
-            message:"Item added in cart",
-            status:1,
-            error:false
-        })
-    } catch (error) {
-        
-        res.send({
-            message:"Something went wrong: "+error.message,
-            status:0,
-            error:true
-        })
-
-    }
-   
-       
-     
-      });
-
-      
-      
 
 cartRouter.patch("/:id",async(req,res)=>{
     let {id:_id} = req.params
@@ -189,6 +159,38 @@ cartRouter.delete("/:id",async(req,res)=>{
 
   });
 
+
+
+cartRouter.use(cartNorderValidator)
+
+
+
+cartRouter.post("/",async(req,res)=>{
+
+    try {
+       
+        await CartModel.insertMany(req.body)
+        res.send({
+            message:"Item added in cart",
+            status:1,
+            error:false
+        })
+    } catch (error) {
+        
+        res.send({
+            message:"Something went wrong: "+error.message,
+            status:0,
+            error:true
+        })
+
+    }
+   
+       
+     
+      });
+
+      
+      
 
 
 module.exports={

@@ -43,37 +43,6 @@ orderRouter.get("/",(req,res)=>{
 
 })
 
-orderRouter.use(cartNorderValidator)
-
-
-orderRouter.post("/",async(req,res)=>{
-   
-    try {
-        
-        req.body.forEach(el => {
-            el.status="ordered"
-            el.orderDate=String(Date.now())
-        });
-        
-        await OrderModel.insertMany(req.body)
-        res.send({
-            message:"Item added in order",
-            status:1,
-            error:false
-        })
-    } catch (error) {
-        
-        res.send({
-            message:"Something went wrong: "+error.message,
-            status:0,
-            error:true
-        })
-
-    }
- 
-  });
-
-orderRouter.use(adminValidator)       
 
 orderRouter.patch("/:id",async(req,res)=>{
     let {id:_id} = req.params
@@ -107,6 +76,39 @@ orderRouter.patch("/:id",async(req,res)=>{
 
 
   });
+
+
+orderRouter.use(cartNorderValidator)
+
+
+orderRouter.post("/",async(req,res)=>{
+   
+    try {
+        
+        req.body.forEach(el => {
+            el.status="ordered"
+            el.orderDate=String(Date.now())
+        });
+        
+        await OrderModel.insertMany(req.body)
+        res.send({
+            message:"Item added in order",
+            status:1,
+            error:false
+        })
+    } catch (error) {
+        
+        res.send({
+            message:"Something went wrong: "+error.message,
+            status:0,
+            error:true
+        })
+
+    }
+ 
+  });
+
+orderRouter.use(adminValidator)       
 
 
 
