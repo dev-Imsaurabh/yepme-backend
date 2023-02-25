@@ -44,6 +44,51 @@ cartRouter.get("/",(req,res)=>{
 
 
 
+cartRouter.get("/:pid",(req,res)=>{
+    let token = req.headers.authorization
+    let {pid} = req.params
+    jwt.verify(token, process.env.SecretKey, async function(err, decoded) {
+        if(err) res.send({
+            message:"Something went wrong: "+err,
+            status:0,
+            error:true
+        })
+        let {userId:user} = decoded
+        try {
+            let data = await CartModel.find({user,pid})
+            if(data.length>0){
+                res.send({
+                    message:"Item already in cart",
+                    status:1,
+                    error:false
+                })
+            }else{
+                res.send({
+                    message:"Item not present in cart",
+                    status:0,
+                    error:true
+                })
+                
+            }
+           
+        } catch (error) {
+            
+            res.send({
+                message:"Something went wrong: "+error.message,
+                status:0,
+                error:true
+            })
+
+        }
+     
+      });
+
+
+
+})
+
+
+
 
 cartRouter.post("/",async(req,res)=>{
 
