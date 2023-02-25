@@ -80,9 +80,76 @@ orderRouter.patch("/:id",async(req,res)=>{
   });
 
 
+
+  
+orderRouter.use(adminValidator)      
+
+orderRouter.post("/admin", async (req, res) => {
+    const  token  = req.headers.authorization;
+    const page = req.query.page
+    
+    jwt.verify(token, process.env.SecretKey, async (err, decoded) => {
+      if (err)
+        res.send({
+          message: "Invalid token: " + err,
+          status: 0,
+          error: true,
+        });
+  
+      if (decoded) {
+       if(decoded.role=="admin"){
+          try {
+              let count = await OrderModel.find({adminId: "admin" + decoded.userId,...req.query }).countDocuments();
+              let data = await OrderModel.find({adminId: "admin" + decoded.userId,...req.query }).skip(page*5).limit(5);
+              res.send({
+                message: "All Order data",
+                status: 1,
+                data: data,
+                error: false,
+                count:count
+              });
+            } catch (error) {
+              res.send({
+                message: "Something went wrong: " + error.message,
+                status: 0,
+                error: true,
+              });
+            }
+       }else{
+          try {
+              
+              let count = await ProductModel.find({...req.query }).countDocuments();
+              let data = await ProductModel.find({...req.query }).skip(page*5).limit(5);
+              res.send({
+                message: "All products data",
+                status: 1,
+                data: data,
+                count:count,
+                error: false,
+              });
+            } catch (error) {
+              res.send({
+                message: "Something went wrong: " + error.message,
+                status: 0,
+                error: true,
+              });
+            }
+       }
+      }else{
+  
+          res.send({
+              message: "Invalid token:",
+              status: 0,
+              error: true,
+            });
+  
+      }
+    });
+  }); 
+
+
+
 orderRouter.use(cartNorderValidator)
-
-
 orderRouter.post("/",async(req,res)=>{
     let token = req.headers.authorization
     jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
@@ -137,8 +204,6 @@ orderRouter.post("/",async(req,res)=>{
  
  
   });
-
-orderRouter.use(adminValidator)       
 
 
 
