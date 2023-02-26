@@ -74,7 +74,64 @@ orderRouter.patch("/:id",async(req,res)=>{
 
 
   
-orderRouter.use(adminValidator)      
+orderRouter.use(adminValidator)   
+
+
+orderRouter.use(cartNorderValidator)
+orderRouter.post("/",async(req,res)=>{
+    let token = req.headers.authorization
+    jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
+        if(err) res.send({
+            message:"Inavlid token: "+err,
+            status:0,
+            error:true
+        })
+
+        if(decoded){
+
+            await CartModel.deleteMany({user:decoded.userId})
+
+            try {
+        
+                req.body.forEach(el => {
+                    el.status="ordered"
+                    el.orderDate=String(Date.now())
+                    
+                });
+                
+                await OrderModel.insertMany(req.body)
+                
+                res.send({
+                    message:"Item added in order",
+                    status:1,
+                    error:false
+                })
+            } catch (error) {
+                
+                res.send({
+                    message:"Something went wrong: "+error.message,
+                    status:0,
+                    error:true
+                })
+        
+            }
+
+        }else{
+
+             
+            res.send({
+                message:"Invalid token: ",
+                status:0,
+                error:true
+            })
+
+        }
+
+    })
+   
+ 
+ 
+  });
 
 orderRouter.post("/admin", async (req, res) => {
     const  token  = req.headers.authorization;
@@ -141,61 +198,6 @@ orderRouter.post("/admin", async (req, res) => {
 
 
 
-orderRouter.use(cartNorderValidator)
-orderRouter.post("/",async(req,res)=>{
-    let token = req.headers.authorization
-    jwt.verify(token,process.env.SecretKey,async(err,decoded)=>{
-        if(err) res.send({
-            message:"Inavlid token: "+err,
-            status:0,
-            error:true
-        })
-
-        if(decoded){
-
-            await CartModel.deleteMany({user:decoded.userId})
-
-            try {
-        
-                req.body.forEach(el => {
-                    el.status="ordered"
-                    el.orderDate=String(Date.now())
-                    
-                });
-                
-                await OrderModel.insertMany(req.body)
-                
-                res.send({
-                    message:"Item added in order",
-                    status:1,
-                    error:false
-                })
-            } catch (error) {
-                
-                res.send({
-                    message:"Something went wrong: "+error.message,
-                    status:0,
-                    error:true
-                })
-        
-            }
-
-        }else{
-
-             
-            res.send({
-                message:"Invalid token: ",
-                status:0,
-                error:true
-            })
-
-        }
-
-    })
-   
- 
- 
-  });
 
 
 
