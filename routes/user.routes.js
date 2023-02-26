@@ -38,6 +38,8 @@ userRouter.post("/login",async (req, res) => {
             res.send({
               message: "Login successful",
               status: 1,
+              name:data[0].name,
+              email:data[0].email,
               token: token,
               error: false,
             });
