@@ -74,7 +74,6 @@ orderRouter.patch("/:id",async(req,res)=>{
 
 
   
-orderRouter.use(adminValidator)   
 
 
 orderRouter.use(cartNorderValidator)
@@ -132,6 +131,8 @@ orderRouter.post("/",async(req,res)=>{
  
  
   });
+  orderRouter.use(adminValidator)   
+
 
 orderRouter.post("/admin", async (req, res) => {
     const  token  = req.headers.authorization;
