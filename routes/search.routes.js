@@ -1,46 +1,64 @@
-const express = require("express")
-const { ProductModel } = require("../models/ProductModel")
+const express = require("express");
+const { ProductModel } = require("../models/ProductModel");
 
-const searchRouter = express.Router()
+const searchRouter = express.Router();
 
-
-searchRouter.get("/",async(req,res)=>{
-
-    let {q,page} = req.query
+searchRouter.get("/", async (req, res) => {
+    let perPage = 12;
+    let page = parseInt(req.query.page) || 0;
+    let q = req.query.q || "";
+    
     try {
-
-        let count = await ProductModel.countDocuments({
+      ProductModel.aggregate([
+        {
+          $match: {
             $or: [
               { title: { $regex: new RegExp(`${q}`, `i`) } },
-              { tags: { $regex: new RegExp(`${q}`, `i`) } }
-            ]
-          })
-        
-        let data = await ProductModel.find({
-            $or: [
-              { title: { $regex: new RegExp(`${q}`, `i`) } },
-              { tags: { $regex: new RegExp(`${q}`, `i`) } }
-            ]
-          }).skip(page*12).limit(12)
-
+              { tags: { $regex: new RegExp(`${q}`, `i`) } },
+            ],
+          },
+        },
+        {
+          $facet: {
+            data: [
+              { $skip: page * perPage },
+              { $limit: perPage },
+            ],
+            count: [
+              { $count: "total" },
+            ],
+          },
+        },
+      ])
+        .then((result) => {
+          let data = result[0].data;
+          let count = result[0].count[0].total;
           res.send({
-            message:"Query successfull",
-            status:1,
-            data:data,
-            count:count,
-            error:false
-          })
+            message: "Query successful",
+            status: 1,
+            data: data,
+            count: count,
+            error: false,
+          });
+        })
+        .catch((error) => {
+          res.send({
+            message: "Something went wrong" + error,
+            status: 0,
+            error: true,
+          });
+        });
     } catch (error) {
-        res.send({
-            message:"Something went wrong"+error.message,
-            status:0,
-            error:true
-          })
+      res.send({
+        message: "Something went wrong" + error.message,
+        status: 0,
+        error: true,
+      });
     }
+    
+  
+});
 
-
-})
-
-module.exports={
-    searchRouter
-}
+module.exports = {
+  searchRouter,
+};
