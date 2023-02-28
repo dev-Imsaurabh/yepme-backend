@@ -21,7 +21,7 @@ orderRouter.get("/",(req,res)=>{
         let {userId:user} = decoded
         try {
             let count = await OrderModel.find({user}).countDocuments()
-            let data = await OrderModel.find({user}).skip(page*5).limit(5)
+            let data = await OrderModel.find({user}).sort({_id:-1}).skip(page*5).limit(5)
             res.send({
                 message:"All order data",
                 status:1,
@@ -149,7 +149,7 @@ orderRouter.post("/admin", async (req, res) => {
        if(decoded.role=="admin"){
           try {
               let count = await OrderModel.find({adminId: "admin" + decoded.userId,...req.query }).countDocuments();
-              let data = await OrderModel.find({adminId: "admin" + decoded.userId,...req.query }).skip(page*5).limit(5);
+              let data = await OrderModel.find({adminId: "admin" + decoded.userId,...req.query }).sort({_id:-1}).skip(page*5).limit(5);
               res.send({
                 message: "All Order data",
                 status: 1,

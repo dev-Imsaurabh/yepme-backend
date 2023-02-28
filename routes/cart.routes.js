@@ -19,7 +19,7 @@ cartRouter.get("/",(req,res)=>{
         let {userId:user} = decoded
         try {
             let count = await CartModel.find({user}).countDocuments()
-            let data = await CartModel.find({user}).skip(page*5).limit(5)
+            let data = await CartModel.find({user}).sort({_id:-1}).skip(page*5).limit(5)
             res.send({
                 message:"All cart data",
                 status:1,
