@@ -168,7 +168,7 @@ orderRouter.post("/admin", async (req, res) => {
           try {
               
               let count = await OrderModel.find({...req.query }).countDocuments();
-              let data = await OrderModel.find({...req.query }).skip(page*5).limit(5);
+              let data = await OrderModel.find({...req.query }).sort({_id:-1}).skip(page*5).limit(5);
               res.send({
                 message: "All Order data",
                 status: 1,
