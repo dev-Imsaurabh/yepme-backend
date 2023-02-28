@@ -8,6 +8,13 @@ searchRouter.get("/",async(req,res)=>{
 
     let {q,page} = req.query
     try {
+
+        let count = await ProductModel.countDocuments({
+            $or: [
+              { title: { $regex: new RegExp(`${q}`, `i`) } },
+              { tags: { $regex: new RegExp(`${q}`, `i`) } }
+            ]
+          })
         
         let data = await ProductModel.find({
             $or: [
@@ -20,6 +27,7 @@ searchRouter.get("/",async(req,res)=>{
             message:"Query successfull",
             status:1,
             data:data,
+            count:count,
             error:false
           })
     } catch (error) {
