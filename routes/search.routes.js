@@ -6,7 +6,7 @@ const searchRouter = express.Router()
 
 searchRouter.get("/",async(req,res)=>{
 
-    let {q} = req.query
+    let {q,page} = req.query
     try {
         
         let data = await ProductModel.find({
@@ -14,7 +14,7 @@ searchRouter.get("/",async(req,res)=>{
               { title: { $regex: new RegExp(`${q}`, `i`) } },
               { tags: { $regex: new RegExp(`${q}`, `i`) } }
             ]
-          })
+          }).skip(page*12).limit(12)
 
           res.send({
             message:"Query successfull",
