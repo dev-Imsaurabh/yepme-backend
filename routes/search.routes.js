@@ -15,6 +15,8 @@ searchRouter.get("/", async (req, res) => {
             $or: [
               { title: { $regex: new RegExp(`${q}`, `i`) } },
               { tags: { $regex: new RegExp(`${q}`, `i`) } },
+              { category: { $regex: new RegExp(`${q}`, `i`) } },
+              { description: { $regex: new RegExp(`${q}`, `i`) } },
             ],
           },
         },
